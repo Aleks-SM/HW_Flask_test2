@@ -1,6 +1,10 @@
 <html>
   <head>
+    {% if title %}
     <title>{{title}} - microavito</title>
+    {% else %}
+    <title>Welcom to microavito</title>
+    {% endif%}
   </head>
   <body>
       <h1>Hello, {{user.nickname}}!</h1>
