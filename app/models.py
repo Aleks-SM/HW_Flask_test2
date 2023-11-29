@@ -10,6 +10,7 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
 
+    
     @staticmethod
     def make_unique_nickname(nickname):
         if User.query.filter_by(nickname = nickname).first() = None:
@@ -21,9 +22,13 @@ class User(db.Model):
                 break
             version += 1
         return new_nickname
-        
+    def avatar(self, size):
+        return 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
+
+    
     def __repr__(self):
         return '<User %r>' % (self.nickname)
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -31,5 +36,6 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    
     def __repr__(self):
         return '<Post %r>' % (self.body)
