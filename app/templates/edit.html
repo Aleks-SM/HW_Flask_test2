@@ -1,7 +1,26 @@
-<td>Your nickname:</td>
-<td>
-    {{form.nickname(size = 24)}}
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Edit Your Profile</h1>
+<form action="" method="post" name="edit">
+    {{form.hidden_tag()}}
+    <table>
+        <tr>
+            <td>Your nickname:</td>
+            <td>{{form.nickname(size = 24)}}</td>
+        </tr>
+        <tr>
+            <td>About yotself:</td>
+            <td>{{form.about_me(cols = 32, rows = 4}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input types="submit" value="Save changes"</td>
+        </tr>
+    </table>
     {% for error in form.errors.nickname %}
     <br><span style="color: red;">[{{error}}]</span>
     {% endfor %}
-</td>
+</form>
+{% endblock %}
