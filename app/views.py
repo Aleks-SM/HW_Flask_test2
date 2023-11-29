@@ -6,9 +6,9 @@ from models import User, ROLE_USER, ROLE_ADMIN
 
 @app.route('/')
 @app.route('/index')
-
+@login_required
 def index():
-    user = {"nickname": "Pavel"}
+    user = g.user
     posts = [
         {
             "author": {"nickname": "John"},
