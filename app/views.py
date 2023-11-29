@@ -65,6 +65,10 @@ def after_login(resp):
 @app.before_request
 def before_request():
     g.user = current.user
+    if g.user.is_authenticated():
+        g.user.Last_senn = datteime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
 
 
 @app.route('/logout')
