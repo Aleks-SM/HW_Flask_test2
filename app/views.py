@@ -72,6 +72,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/edit', methods = ['GET', 'POST'])
+@login_required
+def edit():
+    form = EditForm(g.user.nickname)
 
 @app.errorhandler(404)
 def not_found_error(error):
