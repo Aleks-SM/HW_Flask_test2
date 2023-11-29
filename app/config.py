@@ -8,3 +8,12 @@ CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 OPENID_PROVIDERS = [
     { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' }]
+
+# mail server settings
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+
+# administrator list
+ADMINS = ['you@example.com']
