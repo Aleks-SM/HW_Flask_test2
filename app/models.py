@@ -47,6 +47,10 @@ class User(db.Model):
 
     def is_following(self, user):
         return self.follower.filter(followers.c.followed_id == user_id).count() > 0
+
+    
+    def followed_post():
+        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
         
     
     def avatar(self, size):
