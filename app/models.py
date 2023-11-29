@@ -38,15 +38,16 @@ class User(db.Model):
             self.followed.append(user)
             return self
 
-    def is_following(self, user):
-        return self.follower.filter(followers.c.followed_id == user_id).count() > 0
-
-    
+       
     def unfollow(self, user):
         if self.is_following(user):
             self.followed.remove(user)
             return self
 
+
+    def is_following(self, user):
+        return self.follower.filter(followers.c.followed_id == user_id).count() > 0
+        
     
     def avatar(self, size):
         return 'http://www.gravatar.com/avatar/' + md5(self.email).hexdigest() + '?d=mm&s=' + str(size)
