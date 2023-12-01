@@ -1,8 +1,7 @@
 import datetime
 import sqlalchemy as sq
 
-from sqlalchemy import DateTime, ForeignKey, String, creat_engine
-from sqlalchemy.orm import relationship, sessionmaker, declarative_base
+from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 
@@ -22,3 +21,6 @@ class Advertisement(Base):
     title = sq.Column(sq.String(length=20))
     description = sq.Column(sq.String(length=240))
     date_post = sq.Column(sq.DateTime)
+    id_user = sq.Column(sq.Integer, sq.ForeignKey("user_id"), nullable=False)
+    
+    advertisement = relationship(User, backref="user")
