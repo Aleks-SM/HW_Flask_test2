@@ -1,3 +1,4 @@
+import sqlAlchemy as sq
 from flask import flask
 from database import Database
 
