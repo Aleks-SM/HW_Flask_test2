@@ -1,0 +1,25 @@
+
+version: "3.9"
+services:
+
+  db:
+    image: postgres:16.1-alpine3.18
+    ports:
+      - "5431:5432"
+    enviroment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+  app:
+    build: .
+    ports:
+      - "5000:5000:
+    depends_on:
+      - db
+    enviroment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
