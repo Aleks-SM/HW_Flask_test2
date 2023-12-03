@@ -30,15 +30,22 @@ class User(Base):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name = mapped_column(String(100), unique=True, index=True., nullable==False)
-    password = mapped_column(String(100), nullable=False)
-    email = mapped_column(String(50), unique=True)
-    registration_time = mapped_column(DateTime, server_default=func.now())
+    name: Mapped[str] = mapped_column(String(100), unique=True, index=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(100), nullable=False)
+    email: Mapped[str] = mapped_column(String(50), unique=True)
+    registration_time: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
     # id = sq.Column(sq.Integer, primary_key=True)
     # name = sq.Column(sq.String(length=40), unique=True, nullable=False)
     # password = sq.Column(sq.String(70), nullable=False)
     # email = sq.Column(sq.String(length=40), index=True, unique=True)
 
+@property
+    def dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'registration_time': self.registration_time.isoformat()
+        }
 
 # class Advertisement(Base):
 #     __tablename__ = "advertisement"
