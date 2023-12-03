@@ -1,6 +1,6 @@
 from pydantic import ValidationError
-from app.shema import SHEMA_CLASS
-from app.error import HttpError
+from shema import SHEMA_CLASS
+from error import HttpError
 
 def validate(schema_cls: SHEMA_CLASS, json_data: dict | list):
     try:

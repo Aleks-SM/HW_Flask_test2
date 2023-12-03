@@ -2,11 +2,10 @@ import flask
 from flask import views, jsonify, request
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
-
-from app.models import Session, User
-from app.error import HttpError
-from app.shema import CreateUser, UpdateUser
-from app.tools import validate
+from models import Session, User
+from error import HttpError
+from shema import CreateUser, UpdateUser
+from tools import validate
 
 app = flask.Flask("app")
 bcrypt = Bcrypt(app)
@@ -94,7 +93,7 @@ class UserView(views.MethodView):
 
 user_view = UserView.as_view("user_view")
 
-app.add_url_rule("/users/<int: user_id>>", view_func=user_view, methods=["GET", "PATCH", "DELETE"])
+app.add_url_rule("/users/<int:user_id>>", view_func=user_view, methods=["GET", "PATCH", "DELETE"])
 app.add_url_rule("/users", view_func=user_view, methods=["POST"])
 
 if __name__ == "__main__":
