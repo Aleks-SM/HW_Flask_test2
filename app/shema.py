@@ -1,8 +1,11 @@
 import pydantic
 from typing import Optional, Type
+from abc import ABC
 
+class AbstractUser(pydantic.BaseModel, ABC):
+    name: str
+    password: str
 
-class AbstractUser(pydantic.BaseModel):
     @pydantic.field_validator("name")
     @classmethod
     def name_length(cls, v: str) -> str:
@@ -12,11 +15,11 @@ class AbstractUser(pydantic.BaseModel):
             raise ValueError(f"Maximal length of name 32")
         return v
 
-    @pydantic.field_validator("passord")
+    @pydantic.field_validator("password")
     @classmethod
     def secure_password(cls, v: str) -> str:
         if len(v) < 8:
-            raise ValueError(f"Minimal length of passord is 8")
+            raise ValueError(f"Minimal length of password is 8")
         return v
 
 
@@ -26,8 +29,8 @@ class CreateUser(AbstractUser):
 
 
 class UpdateUser(AbstractUser):
-    name: Optional[str]
-    password: Optional[str]
+    name: Optional[str] = None
+    password: Optional[str] = None
 
 
 SHEMA_CLASS = Type[CreateUser | UpdateUser]

@@ -1,12 +1,13 @@
 import os
 import datetime
 import sqlalchemy as sq
+from sqlalchemy import String, DateTime, func
 from sqlalchemy import create_engine
-from sqlalchemy.orm import relationship
+#from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, DateTime, func
+
 
 
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "secret")
@@ -39,7 +40,7 @@ class User(Base):
     # password = sq.Column(sq.String(70), nullable=False)
     # email = sq.Column(sq.String(length=40), index=True, unique=True)
 
-@property
+    @property
     def dict(self):
         return {
             'id': self.id,
