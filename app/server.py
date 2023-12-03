@@ -1,5 +1,4 @@
 import flask
-
 from flask import views, jsonify, request
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
@@ -16,6 +15,7 @@ bcrypt = Bcrypt(app)
 def hash_password(password: str):
     password = password.encode()
     return bcrypt.generate_password_hash(password).decode()
+
 
 def check_password(password: str, hashed_password: str):
     password = password.encode()
@@ -34,11 +34,13 @@ def after_request(response: flask.Response):
     request.session.close()
     return response
 
+
 @app.errorhandler(HttpError)
 def error_handler(error):
     response = jsonify({"error": error.description})
     response.status_code = error.status_code
     return response
+
 
 def get_user(user_id: int):
     user = request.session.get(User, user_id)
@@ -47,12 +49,14 @@ def get_user(user_id: int):
         # return response
     return user
 
+
 def add_user(user: User):
     try:
         request.session.add(user)
         request.session.commit()
     except IntegrityError as err:
         raise HttpError(409, "user already exists")
+
 
 class UserView(views.MethodView):
 
@@ -86,6 +90,7 @@ class UserView(views.MethodView):
         self.session.delete(user)
         self.session.commit()
         return jsonify({"status": "ok"})
+
 
 user_view = UserView.as_view("user_view")
 
