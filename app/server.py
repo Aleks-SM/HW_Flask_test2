@@ -65,16 +65,16 @@ class UserView(views.MethodView):
 
     def get(self, user_id: int):
         user = get_user(user_id)
-        return flask.jsonify(user.dict)
+        return jsonify(user.dict)
 
-    def post(self, user_id: int):
+    def post(self):
         user_data = validate(CreateUser, request.json)
         user_data["password"] = hash_password(user_data["password"])
         user = User(**user_data)
         add_user(user)
-        return jsonify({"id": user_id})
+        return jsonify({"id": user.id})
 
-    def path(self, user_id: int):
+    def patch(self, user_id: int):
         user = get_user(user_id)
         user_data = validate(UpdateUser, request.json)
         if "password" in user_data:
@@ -82,7 +82,7 @@ class UserView(views.MethodView):
         for key, value in user_data.items():
             setattr(user, key, value)
             add_user(user)
-        return jsonify({"id": user_id})
+        return jsonify({"id": user.id})
 
     def delete(self, user_id: int):
         user = get_user(user_id)
@@ -93,7 +93,7 @@ class UserView(views.MethodView):
 
 user_view = UserView.as_view("user_view")
 
-app.add_url_rule("/users/<int:user_id>>", view_func=user_view, methods=["GET", "PATCH", "DELETE"])
+app.add_url_rule("/users/<int:user_id>", view_func=user_view, methods=["GET", "PATCH", "DELETE"])
 app.add_url_rule("/users", view_func=user_view, methods=["POST"])
 
 if __name__ == "__main__":

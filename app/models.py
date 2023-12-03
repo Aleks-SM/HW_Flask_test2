@@ -33,7 +33,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), unique=True, index=True, nullable=False)
     password: Mapped[str] = mapped_column(String(100), nullable=False)
-    email: Mapped[str] = mapped_column(String(50), unique=True)
+    # email: Mapped[str] = mapped_column(String(50), unique=True)
     registration_time: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
     # id = sq.Column(sq.Integer, primary_key=True)
     # name = sq.Column(sq.String(length=40), unique=True, nullable=False)
