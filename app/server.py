@@ -1,12 +1,10 @@
 import flask
 from flask import views, jsonify, request
-from app.models import Session, User
 from sqlalchemy.exc import IntegrityError
-
-class HttpError(Exception):
-    def __init__(self, status_code: int, description: str):
-        self.status_code = status_code
-        self.description = description
+from app.models import Session, User
+from app.error import HttpError
+from app.shema import CreateUser, UpdateUser
+from app.tools import validate
 
 app = flask.flask("app")
 
@@ -51,14 +49,14 @@ class UserView(views.MethodView):
         return flask.jsonify(user.dict)
 
     def post(self, user_id: int):
-        user_data = request.json
+        user_data = validate(CreateUser, request.json)
         user = User(**user_data)
         add_user(user)
         return jsonify({"id": user_id})
 
     def path(self, user_id: int):
         user = get_user(user_id)
-        user_data = request.json
+        user_data = validate(CreateUser, request.json)
         for key, value in user_data.items():
             setattr(user, key, value)
             add_user(user)
