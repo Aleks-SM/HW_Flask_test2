@@ -1,5 +1,6 @@
 import pydantic
-from typing import Optional
+from typing import Optional, Type
+
 
 class AbstractUser(pydantic.BaseModel):
     @pydantic.field_validator("name")
@@ -27,3 +28,7 @@ class CreateUser(AbstractUser):
 class UpdateUser(AbstractUser):
     name: Optional[str]
     password: Optional[str]
+
+
+SHEMA_CLASS = Type[CreateUser | UpdateUser]
+SHEMA = CreateUser | UpdateUser
