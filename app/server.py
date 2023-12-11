@@ -72,7 +72,7 @@ class UserView(views.MethodView):
         user_data["password"] = hash_password(user_data["password"])
         user = User(**user_data)
         add_user(user)
-        return jsonify({"id": user.id})
+        return jsonify({"id": user.user_id})
 
     def patch(self, user_id: int):
         user = get_user(user_id)
@@ -82,7 +82,7 @@ class UserView(views.MethodView):
         for key, value in user_data.items():
             setattr(user, key, value)
             add_user(user)
-        return jsonify({"id": user.id})
+        return jsonify({"id": user.user_id})
 
     def delete(self, user_id: int):
         user = get_user(user_id)

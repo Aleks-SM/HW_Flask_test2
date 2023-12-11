@@ -5,6 +5,7 @@ from abc import ABC
 class AbstractUser(pydantic.BaseModel, ABC):
     name: str
     password: str
+    email: str
 
     @pydantic.field_validator("name")
     @classmethod
@@ -26,11 +27,13 @@ class AbstractUser(pydantic.BaseModel, ABC):
 class CreateUser(AbstractUser):
     name: str
     password: str
+    email: str
 
 
 class UpdateUser(AbstractUser):
     name: Optional[str] = None
     password: Optional[str] = None
+    email: Optional[str] = None
 
 
 SHEMA_CLASS = Type[CreateUser | UpdateUser]
