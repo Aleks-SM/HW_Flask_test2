@@ -36,6 +36,3 @@ class UpdateUser(AbstractUser):
 class LoginUser(AbstractUser):
     email: str
     password: str
-
-# SHEMA_CLASS = Type[CreateUser | UpdateUser]
-# SHEMA = CreateUser | UpdateUser
