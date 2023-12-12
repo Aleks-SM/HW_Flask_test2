@@ -1,6 +1,5 @@
 import os
 import datetime
-import sqlalchemy as sq
 from sqlalchemy import String, DateTime, func, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.orm import relationship
@@ -25,8 +24,6 @@ class Base(DeclarativeBase):
     pass
 
 
-#Base = declarative_base()
-
 class User(Base):
     __tablename__ = "user"
 
@@ -35,10 +32,6 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(50), unique=True)
     registration_time: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
-    # id = sq.Column(sq.Integer, primary_key=True)
-    # name = sq.Column(sq.String(length=40), unique=True, nullable=False)
-    # password = sq.Column(sq.String(70), nullable=False)
-    # email = sq.Column(sq.String(length=40), index=True, unique=True)
 
     @property
     def dict(self):
@@ -56,8 +49,8 @@ class Advertisement(Base):
     title: Mapped[str] = mapped_column(String(20), nullable=False)
     description: Mapped[str] = mapped_column(String(240), nullable=False)
     date_post: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.user_id"), nullable=False)
+    owner_id: Mapped[int] = mapped_column(ForeignKey("user.user_id", ondelete='CASCADE'), nullable=False )
 
-    advertisement = relationship(User, backref="user")
+    user = relationship("User", backref="user")
 
 Base.metadata.create_all(bind=engine)
