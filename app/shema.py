@@ -10,17 +10,15 @@ class AbstractUser(pydantic.BaseModel, ABC):
     @pydantic.field_validator("name")
     @classmethod
     def name_length(cls, v: str) -> str:
-        if len(v) < 3:
-            raise ValueError(f"Minimal length of name is 3")
-        if len(v) > 100:
-            raise ValueError(f"Maximal length of name 32")
+        if 50 < len(v) < 3:
+            raise ValueError(f"Name length must be from 3 to 50 characters")
         return v
 
     @pydantic.field_validator("password")
     @classmethod
     def secure_password(cls, v: str) -> str:
-        if len(v) < 8:
-            raise ValueError(f"Minimal length of password is 8")
+        if 50 < len(v) < 8:
+            raise ValueError(f"Password length must be from 8 to 50 characters")
         return v
 
 
@@ -35,6 +33,9 @@ class UpdateUser(AbstractUser):
     password: Optional[str] = None
     email: Optional[str] = None
 
+class LoginUser(AbstractUser):
+    email: str
+    password: str
 
-SHEMA_CLASS = Type[CreateUser | UpdateUser]
-SHEMA = CreateUser | UpdateUser
+# SHEMA_CLASS = Type[CreateUser | UpdateUser]
+# SHEMA = CreateUser | UpdateUser
