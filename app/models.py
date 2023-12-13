@@ -24,18 +24,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(50), unique=True, index=True, nullable=False)
     registration_time: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
 
-    def is_authenticated():
-        return True
 
-    def is_active():
-        return True
-
-    def is_anonymous():
-        return False
-
-    def get_id(self):
-        return str(self.id)
-        
     @property
     def dict(self):
         return {
@@ -55,5 +44,15 @@ class Advertisement(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey("user.id", ondelete='CASCADE'), nullable=False)
 
     user = relationship("User", backref="user")
+
+    @property
+    def dict(self):
+        return {
+            'adv_id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'date_post': self.date_post.isoformat()
+        }
+
 
 Base.metadata.create_all(bind=engine)
