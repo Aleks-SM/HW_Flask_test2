@@ -1,7 +1,6 @@
 from pydantic import ValidationError
-from shema import SHEMA_CLASS
-from error import HttpError
 from flask_scrypt import generate_password_hash, generate_random_salt, check_password_hash
+from error import HttpError
 
 def validate(schema_cls, json_data: dict | list):
     try:
