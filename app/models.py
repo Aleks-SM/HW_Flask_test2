@@ -49,7 +49,6 @@ class Advertisement(Base):
     def dict(self):
         return {
             'adv_id': self.id,
-            'name': self.name,
             'description': self.description,
             'date_post': self.date_post.isoformat()
         }
