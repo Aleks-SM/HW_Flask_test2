@@ -11,7 +11,6 @@ def get_user(user_id: int):
     user = request.session.get(User, user_id)
     if user is None:
         raise HttpError(404, "user not found")
-        # return response
     return user
 
 
@@ -19,15 +18,16 @@ def add_user(user: User):
     try:
         request.session.add(user)
         request.session.commit()
-    except IntegrityError as err:
+    except IntegrityError:
         raise HttpError(409, "user already exists")
 
-class UserView(views.MethodView):
-
+class AbstractView(views.MethodView):
     @property
     def session(self) -> Session:
         return request.session
 
+
+class UserView(AbstractView):
     def get(self, user_id: int):
         user = get_user(user_id)
         return jsonify(user.dict)
@@ -56,13 +56,7 @@ class UserView(views.MethodView):
         return jsonify({"status": "ok"})
 
 
-class LoginView(views.MethodView):
-
-    @property
-    def session(self) -> Session:
-        return request.session
-
-
+class LoginView(AbstractView):
     def post(self):
         user_data = validate(LoginUser, request.json)
         user_data["password"] = hash_password(user_data["password"])
