@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped, mapped_column
 from config import POSTGRES_PASSWORD, POSTGRES_USER, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST
-from app import db
 
 
 PG_DSN = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
