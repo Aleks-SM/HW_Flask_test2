@@ -6,7 +6,7 @@ from error import HttpError
 from views import UserView, LoginView
 
 
-app = flask.Flask(__name__)
+app = flask.Flask('app')
 
 
 @app.before_request
