@@ -37,7 +37,7 @@ class UserView(AbstractView):
         user_data["password"] = hash_password(user_data["password"])
         user = User(**user_data)
         add_user(user)
-        return jsonify({"id": user.user_id})
+        return jsonify({"id": user.id})
 
     def patch(self, user_id: int):
         user = get_user(user_id)
@@ -47,7 +47,7 @@ class UserView(AbstractView):
         for key, value in user_data.items():
             setattr(user, key, value)
             add_user(user)
-        return jsonify({"id": user.user_id})
+        return jsonify({"id": user.id})
 
     def delete(self, user_id: int):
         user = get_user(user_id)
@@ -62,4 +62,4 @@ class LoginView(AbstractView):
         user_data["password"] = hash_password(user_data["password"])
         user = User(**user_data)
         add_user(user)
-        return jsonify({"id": user.user_id})
+        return jsonify({"id": user.id})
