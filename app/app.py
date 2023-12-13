@@ -1,5 +1,5 @@
 from flask.ext.sqlAlchemy import SQLAlchemy
-from flask.ext.login import LoginManager, current_user
+from flask.ext.login LoginManager, current_user
 
 
 db = SQLALchemy(app)
